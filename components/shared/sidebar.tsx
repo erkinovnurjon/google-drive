@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../ui/button";
 import { Clock5, Cloud,  Plus, Star, Tablet, Trash } from "lucide-react";
 import Link from "next/link";
