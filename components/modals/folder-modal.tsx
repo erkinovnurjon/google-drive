@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { UseFolder } from '@/hooks/use-folder'
 
