@@ -17,11 +17,13 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 import { toast } from "sonner";
 import { UseFolder } from "@/hooks/use-folder";
+import { useRouter } from "next/navigation";
 
 const PopoverActions = () => {
       const inputRef = useRef<ElementRef<"input">>(null);
       const { onOpen } = UseFolder();
       const { user } = useUser();
+      const router = useRouter()
 
       const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const files = e.target.files;
@@ -51,7 +53,7 @@ const PopoverActions = () => {
                         getDownloadURL(refs).then((url) => {
                               updateDoc(doc(db, "files", docs.id), {
                                     image: url,
-                              });
+                              }).then(() => router.refresh())
                         });
                   });
             });
