@@ -10,10 +10,11 @@ import React from "react"
 
 
 interface ListActionProps{
-      item : IFolderAndFile
+      item : IFolderAndFile,
+      onStartEditing? : (e : React.MouseEvent<HTMLDivElement , MouseEvent>) => void 
 }
 
-const ListAction = ({item} : ListActionProps) => {
+const ListAction = ({item , onStartEditing} : ListActionProps) => {
       const {refresh} = useRouter()
       const type = item.size ? "files" : "folders"
 
@@ -59,6 +60,25 @@ const ListAction = ({item} : ListActionProps) => {
                   error: " Failed to unstarred"
             })
       }
+
+      const onDownload = () => {
+            if (!item.size) {
+                  toast.error("This is a folder , not a file")
+                  return
+            }
+
+            window.open(item.image , "_blank")
+      }
+
+      const onShare = () => {
+            if (item.size) {
+                  toast.error("You can't share a folder")
+                  return
+            }
+
+            navigator.clipboard.writeText(item.image)
+            toast.success("Link copied to clipboard")
+      }
   return (
     <div className="flex items-center space-x-1">
       <div role="button" className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition opacity-0
@@ -88,16 +108,16 @@ const ListAction = ({item} : ListActionProps) => {
                   </div>
             </PopoverTrigger>
             <PopoverContent className="px-0 py-2">
-                  <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button">
+                  <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button" onClick={onDownload}>
                         <Download  className="w-4 h-4"/>
                         <span>Download</span>
                   </div>
-                  <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button">
+                  <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button" onClick={onStartEditing} >
                         <Pencil  className="w-4 h-4"/>
-                        <span>Download</span>
+                        <span>Rename</span>
                   </div>
                   <Separator />
-                          <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button">
+                          <div className=" flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm" role="button" onClick={onShare}>
                                 <UserPlus className="w-4 h-4" />
                                 <span>Share</span>
                           </div>
