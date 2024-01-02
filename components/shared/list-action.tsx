@@ -15,11 +15,11 @@ interface ListActionProps{
 
 const ListAction = ({item} : ListActionProps) => {
       const {refresh} = useRouter()
+      const type = item.size ? "files" : "folders"
 
       const onDelete = (e : React.MouseEvent<HTMLDivElement, MouseEvent>) => {
          e.stopPropagation()
 
-         const type = item.size ? "files" : "folders"
 
          const ref =doc(db , type ,  item.id )
          const promise = setDoc(ref , {...item ,
@@ -34,10 +34,30 @@ const ListAction = ({item} : ListActionProps) => {
             })
       }
 
-      const onStar = (e : React.MouseEvent<HTMLDivElement , MouseEvent>) => {
+      const onAddStar = (e : React.MouseEvent<HTMLDivElement , MouseEvent>) => {
          e.stopPropagation()
-
          
+         const ref = doc(db  , type , item.id)
+         const promise = setDoc(ref , {...item , isStar : true}).then(() => refresh())
+
+         toast.promise(promise , {
+            loading : "Loading ...",
+            success : "Starred!" ,
+            error: " Failed to Starred"
+         })
+      }
+
+      const onRemoveStar = (e: React.MouseEvent<HTMLDivElement , MouseEvent>) => {
+            e.stopPropagation()
+            const ref = doc(db, type , item.id)
+
+            const promise = setDoc(ref , {...item , isStar : false}).then(() => refresh())
+
+            toast.promise(promise , {
+                  loading: "Loading",
+                  success : "unstarred!",
+                  error: " Failed to unstarred"
+            })
       }
   return (
     <div className="flex items-center space-x-1">
@@ -46,10 +66,20 @@ const ListAction = ({item} : ListActionProps) => {
        onClick={onDelete}>
             <Trash className=" w-4 h-4 opacity-50" />
       </div>
+      {item.isStar ? (
+                    <div role="button" className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition opacity-0
+                  group-hover:opacity-100"
+                          onClick={onRemoveStar}>
+                          <Star className=" w-4 h-4  fill-yellow-400 text-yellow-400" />
+                    </div>
+      ) : (
+
               <div role="button" className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition opacity-0
-       group-hover:opacity-100">
-            <Star className=" w-4 h-4 opacity-50" />
-      </div>
+                  group-hover:opacity-100"
+                  onClick={onAddStar}>
+              <Star className=" w-4 h-4 opacity-50" />
+             </div>
+      )}
 
       <Popover>
             <PopoverTrigger className=" flex justify-start" asChild>
