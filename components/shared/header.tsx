@@ -1,6 +1,9 @@
-import { ChevronDown, Info, TableProperties } from "lucide-react"
+"use client"
+
+import { ChevronDown, Info, LayoutPanelTop, TableProperties } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import PopoverActions from "./popover-actions"
+import { useLayout } from "@/hooks/use-layout"
 
 
 interface HeaderProps{
@@ -9,6 +12,7 @@ interface HeaderProps{
 }
 
 const Header = ({label , isHome} : HeaderProps) => {
+      const { setLayout , layout} = useLayout()
   return (
     <div className=" w-full flex items-center justify-between">
       {isHome ? (
@@ -29,10 +33,18 @@ const Header = ({label , isHome} : HeaderProps) => {
 
       {isHome && (
             <div className=" flex items-center space-x-2">
+                  {layout === "list" ? (
+                       
                   <div role="button"
-                  className=" p-2 hover:bg-secondary rounded-full transition">
+                  className=" p-2 hover:bg-secondary rounded-full transition" onClick={() => setLayout("grid")}>
                         <TableProperties className=" w-5 h-5" />
                   </div>
+                  ) : (
+                        <div role="button"
+                            onClick={() => setLayout("list")} className=" p-2 hover:bg-secondary rounded-full transition">
+                        <LayoutPanelTop className=" w-5 h-5" />
+                  </div>
+                  )}
                   <div role="button"
                   className=" p-2 hover:bg-secondary rounded-full transition">
                         <Info className=" w-5 h-5" />
