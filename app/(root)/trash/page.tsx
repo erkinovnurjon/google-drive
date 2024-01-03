@@ -1,3 +1,4 @@
+import Empty from '@/components/shared/empty'
 import Header from '@/components/shared/header'
 import TrashItem from '@/components/shared/trash-item'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -30,6 +31,7 @@ const TrashPage = async () => {
     <>
 
     <Header label='trash' />
+    {[...files , ...folders].length === 0 ? <Empty /> : (
               <Table className=" mt-4">
 
                     <TableHeader>
@@ -47,6 +49,8 @@ const TrashPage = async () => {
                           ))}
                     </TableBody>
               </Table>
+
+    )}
     </>
   )
 }

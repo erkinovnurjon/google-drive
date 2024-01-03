@@ -1,7 +1,7 @@
 import Header from "@/components/shared/header";
 import Lists from "@/components/shared/lists";
 import { db } from "@/lib/firebase";
-import { UserButton, auth } from "@clerk/nextjs";
+import {  auth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 const getData = async ( uid : string , type : "files" | "folders") => {

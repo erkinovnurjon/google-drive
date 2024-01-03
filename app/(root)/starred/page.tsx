@@ -1,4 +1,5 @@
 import SuggestCard from '@/components/card/suggested-card'
+import Empty from '@/components/shared/empty'
 import Header from '@/components/shared/header'
 import ListItem from '@/components/shared/list-item'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -31,14 +32,16 @@ const StarredPage = async () => {
   return (
     <>
     <Header label='Starred' />
+    {[...files , ...folders].length === 0 ? <Empty /> : (
+      <>
 
-    <div className=" text-sm opacity-70 mt-6">Suggested
+    <div className=" text-sm opacity-70 mt-6">Suggested</div>
      <div className=" grid grid-cols-4 gap-4 mt-4">
         {files.map((file) => (
             <SuggestCard key={file.id} item={file} />
         ))}
      </div>
-    </div>
+    
     <div className=" text-sm opacity-70 mt-6">Folders
                     <Table className=" mt-4">
 
@@ -58,6 +61,9 @@ const StarredPage = async () => {
                           </TableBody>
                     </Table>
     </div>
+      </>
+    )}
+
     </>
   )
 }

@@ -1,3 +1,4 @@
+import Empty from '@/components/shared/empty'
 import Header from '@/components/shared/header'
 import ListItem from '@/components/shared/list-item'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -29,7 +30,7 @@ const RecentPage = async () => {
   return (
     <>
       <Header label='recent' />
-
+      {[...files , ...folders].length === 0 ? <Empty /> : (
 
               <Table className=" mt-4">
 
@@ -48,6 +49,9 @@ const RecentPage = async () => {
                           ))}
                     </TableBody>
               </Table>
+      )}
+
+
     </>
   )
 }
