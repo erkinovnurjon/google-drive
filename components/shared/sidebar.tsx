@@ -10,10 +10,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import PopoverActions from "./popover-actions";
 import { UsePlan } from "@/hooks/use-plan";
 import { useSubscription } from "@/hooks/use-subscribtion";
+import { byteConverter } from "@/lib/utils";
 
 const Sidebar = () => {
   const { onOpen } = UsePlan();
-  const { subscription , isLoading} = useSubscription()
+  const { subscription , isLoading , totalStorage} = useSubscription()
+
+  const totalValue = subscription === "Basic" ? 15_000_000 : 15_000_000_0
 
   return (
     <div className="h-[90vh] w-72 fixed top-[10vh] left-0 z-30 bg-[#F6F9FC] dark:bg-[#1f1f1f]">
@@ -44,8 +47,8 @@ const Sidebar = () => {
                 </div>
             ) : (
               <>
-              <Progress className = "h-2" value = { 30 } />
-                <span>20 MB of {subscription === "Basic" ? "1.5GB" : "15GB"} used</span>
+              <Progress className = "h-2" value = { totalStorage / totalValue } />
+                <span>{byteConverter(totalStorage , 1)} of {subscription === "Basic" ? "1.5GB" : "15GB"} used</span>
               </>
             )}
             
