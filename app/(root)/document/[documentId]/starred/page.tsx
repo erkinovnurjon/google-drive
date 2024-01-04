@@ -5,7 +5,7 @@ import { db } from "@/lib/firebase";
 import { DocIdProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
-
+import React from "react";
 
 const getFiles = async (folderId: string, uid: string) => {
       let files: any[] = [];

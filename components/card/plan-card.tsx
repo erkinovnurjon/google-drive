@@ -9,7 +9,6 @@ import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { useSubscription } from "@/hooks/use-subscribtion";
 
-
 interface PlanCardProps {
       name: string;
       description: string;

@@ -1,7 +1,5 @@
-"use client"
-
-import * as z from "zod"
+import * as z from "zod";
 
 export const formSchema = z.object({
-      name: z.string().min(4).max(50),
-})
+      name: z.string().min(2).max(50),
+});

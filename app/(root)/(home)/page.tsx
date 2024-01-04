@@ -1,7 +1,7 @@
 import Header from "@/components/shared/header";
 import Lists from "@/components/shared/lists";
 import { db } from "@/lib/firebase";
-import {  auth } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React from "react";
 
