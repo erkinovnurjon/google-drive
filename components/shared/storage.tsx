@@ -12,7 +12,7 @@ interface StorageProps {
 }
 
 const Storage = ({ totalSize }: StorageProps) => {
-  const {subscription , totalStorage , setTotalstotage} = useSubscription()
+  const {subscription , totalStorage } = useSubscription()
 
   
   

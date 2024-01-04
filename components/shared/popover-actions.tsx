@@ -56,7 +56,19 @@ const PopoverActions = () => {
                   uid: user?.id,
                   timestamp: serverTimestamp(),
                   isArchive: false,
+                  isDocument : false
             }).then((docs) => {
+                  if (documentId) {
+                        addDoc(collection(db , "files"),{
+                              name: file.name,
+                              type: file.type,
+                              size: file.size,
+                              uid: user?.id,
+                              timestamp: serverTimestamp(),
+                              isArchive: false,
+                              isDocument : true 
+                        })
+                  }
                   const refs = documentId
                         ? ref(storage, `files/${folderId}/${docs.id}/image`)
                         : ref(storage, `files/${docs.id}/image`);
