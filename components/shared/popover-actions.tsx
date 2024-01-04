@@ -1,9 +1,9 @@
 "use client";
 
 import { FileUp, Folder, FolderUp, Star, Trash } from "lucide-react";
-import  { ElementRef, useRef } from "react";
+import React, { ElementRef, useRef } from "react";
 import { Separator } from "../ui/separator";
-
+import { useFolder } from "@/hooks/use-folder";
 import {
       addDoc,
       collection,
@@ -17,16 +17,15 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { UseFolder } from "@/hooks/use-folder";
 import { useSubscription } from "@/hooks/use-subscribtion";
 
 const PopoverActions = () => {
       const inputRef = useRef<ElementRef<"input">>(null);
-      const { onOpen } = UseFolder();
+      const { onOpen } = useFolder();
       const { user } = useUser();
       const router = useRouter();
       const { documentId } = useParams();
-      const { setTotalstotage , totalStorage} = useSubscription()
+      const { setTotalStorage, totalStorage } = useSubscription();
 
       const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const files = e.target.files;
@@ -56,19 +55,20 @@ const PopoverActions = () => {
                   uid: user?.id,
                   timestamp: serverTimestamp(),
                   isArchive: false,
-                  isDocument : false
+                  isDocument: false,
             }).then((docs) => {
                   if (documentId) {
-                        addDoc(collection(db , "files"),{
+                        addDoc(collection(db, "files"), {
                               name: file.name,
                               type: file.type,
                               size: file.size,
                               uid: user?.id,
                               timestamp: serverTimestamp(),
                               isArchive: false,
-                              isDocument : true 
-                        })
+                              isDocument: true,
+                        });
                   }
+
                   const refs = documentId
                         ? ref(storage, `files/${folderId}/${docs.id}/image`)
                         : ref(storage, `files/${docs.id}/image`);
@@ -82,8 +82,8 @@ const PopoverActions = () => {
                               updateDoc(docRefs, {
                                     image: url,
                               }).then(() => {
-                                    router.refresh()
-                                    setTotalstotage(totalStorage + file.size)
+                                    router.refresh();
+                                    setTotalStorage(totalStorage + file.size);
                               });
                         });
                   });

@@ -1,13 +1,13 @@
 "use client";
 
-import { UsePlan } from "@/hooks/use-plan";
+import { usePlan } from "@/hooks/use-plan";
 import React from "react";
 import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
 import Image from "next/image";
 import PlanCard from "../card/plan-card";
 
 const PlanModal = () => {
-  const { isOpen, onClose } = UsePlan();
+  const { isOpen, onClose } = usePlan();
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
